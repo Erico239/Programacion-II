@@ -1,0 +1,66 @@
+class Punto {
+    public float x, y;
+
+    public Punto(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%.2f, %.2f)", x, y);
+    }
+}
+
+class Linea {
+    private Punto p1, p2;
+
+    public Linea(Punto p1, Punto p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+
+    @Override
+    public String toString() {
+        return "Línea entre " + p1 + " y " + p2;
+    }
+
+    public void dibujaLinea() {
+        System.out.println("Dibujando línea desde " + p1 + " hasta " + p2);
+    }
+}
+
+class Circulo {
+    private Punto centro;
+    private float radio;
+
+    public Circulo(Punto centro, float radio) {
+        this.centro = centro;
+        this.radio = radio;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Círculo con centro en %s y radio %.2f", centro, radio);
+    }
+
+    public void dibujaCirculo() {
+        System.out.println("Dibujando círculo con centro en " + centro + " y radio " + radio);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Punto p1 = new Punto(1, 2);
+        Punto p2 = new Punto(4, 6);
+
+        Linea linea = new Linea(p1, p2);
+        Circulo circulo = new Circulo(p1, 5);
+
+        System.out.println(linea);
+        linea.dibujaLinea();
+
+        System.out.println(circulo);
+        circulo.dibujaCirculo();
+    }
+}

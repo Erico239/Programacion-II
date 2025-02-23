@@ -4,9 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información del Estudiante</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #FF7E5F, #FEB47B); /* Fondo cálido */
+            color: #fff; /* Texto blanco */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #FF6F61;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #D55C52; /* Cambio de color al pasar el mouse */
+        }
+        .container {
+            padding: 30px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro translúcido */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
-    <h1>Nombre : Erick Paye Alvarez</h1>
-    <p>Enlace a mi GitHub: <a href="https://github.com/Erico239/Programacion-II" target="_blank">Ver repositorio</a></p>
+    <div class="container">
+        <h1>Nombre: Erick Paye Alvarez</h1>
+        <p>Enlace a mi GitHub:</p>
+        <a href="https://github.com/Erico239/Programacion-II" target="_blank">Ver este repositorio!</a>
+    </div>
 </body>
 </html>

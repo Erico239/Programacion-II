@@ -1,19 +1,32 @@
-class Punto {
-    public float x, y;
+import javax.swing.*;
+import java.awt.*;
 
-    public Punto(float x, float y) {
+class Punto {
+    public int x, y;
+
+    public Punto(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    public int[] coordCartesianas() {
+        return new int[]{x, y};
+    }
+
+    public double[] coordPolares() {
+        double r = Math.hypot(x, y);
+        double theta = Math.toDegrees(Math.atan2(y, x));
+        return new double[]{r, theta};
+    }
+
     @Override
     public String toString() {
-        return String.format("(%.2f, %.2f)", x, y);
+        return "Punto(" + x + ", " + y + ")";
     }
 }
 
 class Linea {
-    private Punto p1, p2;
+    public Punto p1, p2;
 
     public Linea(Punto p1, Punto p2) {
         this.p1 = p1;
@@ -22,45 +35,70 @@ class Linea {
 
     @Override
     public String toString() {
-        return "Línea entre " + p1 + " y " + p2;
-    }
-
-    public void dibujaLinea() {
-        System.out.println("Dibujando línea desde " + p1 + " hasta " + p2);
+        return "Linea desde " + p1 + " hasta " + p2;
     }
 }
 
 class Circulo {
-    private Punto centro;
-    private float radio;
+    public Punto centro;
+    public int radio;
 
-    public Circulo(Punto centro, float radio) {
+    public Circulo(Punto centro, int radio) {
         this.centro = centro;
         this.radio = radio;
     }
 
     @Override
     public String toString() {
-        return String.format("Círculo con centro en %s y radio %.2f", centro, radio);
+        return "Circulo con centro en " + centro + " y radio de " + radio;
+    }
+}
+
+class Grafico extends JPanel {
+    private Linea linea;
+    private Circulo circulo;
+
+    public Grafico(Linea linea, Circulo circulo) {
+        this.linea = linea;
+        this.circulo = circulo;
     }
 
-    public void dibujaCirculo() {
-        System.out.println("Dibujando círculo con centro en " + centro + " y radio " + radio);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor(Color.BLACK);
+        g2.fillOval(linea.p1.x * 50 + 250, -linea.p1.y * 50 + 250, 8, 8);
+        g2.fillOval(linea.p2.x * 50 + 250, -linea.p2.y * 50 + 250, 8, 8);
+
+        g2.setColor(Color.BLUE);
+        g2.drawLine(linea.p1.x * 50 + 250, -linea.p1.y * 50 + 250,
+                    linea.p2.x * 50 + 250, -linea.p2.y * 50 + 250);
+
+        g2.setColor(Color.RED);
+        g2.drawOval(circulo.centro.x * 50 + 250 - circulo.radio * 50,
+                    -circulo.centro.y * 50 + 250 - circulo.radio * 50,
+                    circulo.radio * 100, circulo.radio * 100);
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        Punto p1 = new Punto(1, 2);
-        Punto p2 = new Punto(4, 6);
+        Punto p1 = new Punto(0, 3);
+        Punto p2 = new Punto(3, 4);
+        System.out.println(p1);
+        System.out.println("Coordenadas Cartesianas: " + java.util.Arrays.toString(p1.coordCartesianas()));
+        System.out.println("Coordenadas Polares: " + java.util.Arrays.toString(p1.coordPolares()));
 
         Linea linea = new Linea(p1, p2);
         Circulo circulo = new Circulo(p1, 5);
 
-        System.out.println(linea);
-        linea.dibujaLinea();
-
-        System.out.println(circulo);
-        circulo.dibujaCirculo();
+        JFrame frame = new JFrame("Gráfico de Figuras");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 500);
+        frame.add(new Grafico(linea, circulo));
+        frame.setVisible(true);
     }
 }
+

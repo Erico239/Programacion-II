@@ -1,44 +1,63 @@
 import math
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Punto:
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
-    def __str__(self):
-        return f"({self.x:.2f}, {self.y:.2f})"
+    def coord_cartesianas(self):
+        return self.x, self.y
+
+    def coord_polares(self):
+        r = math.hypot(self.x, self.y)
+        theta = math.atan2(self.y, self.x)
+        return r, math.degrees(theta)
+
+    def __repr__(self):
+        return f"Punto({self.x}, {self.y})"
 
 class Linea:
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
 
-    def __str__(self):
-        return f"Línea entre {self.p1} y {self.p2}"
+    def __repr__(self):
+        return f"Linea desde {self.p1} hasta {self.p2}"
 
-    def dibujaLinea(self):
-        print(f"Dibujando línea desde {self.p1} hasta {self.p2}")
+    def dibuja(self, ax):
+        ax.plot([self.p1.x, self.p2.x], [self.p1.y, self.p2.y], 'b-')
 
 class Circulo:
     def __init__(self, centro, radio):
         self.centro = centro
         self.radio = radio
 
-    def __str__(self):
-        return f"Círculo con centro en {self.centro} y radio {self.radio:.2f}"
+    def __repr__(self):
+        return f"Circulo con centro en {self.centro} y radio de {self.radio:.2f}"
 
-    def dibujaCirculo(self):
-        print(f"Dibujando círculo con centro en {self.centro} y radio {self.radio}")
+    def dibuja(self, ax):
+        circle = plt.Circle((self.centro.x, self.centro.y), self.radio, color='r', fill=False)
+        ax.add_patch(circle)
 
+if __name__ == "__main__":
+    p1 = Punto(0, 3)
+    p2 = Punto(3, 4)
+    print(p1)
+    print("Coordenadas Cartesianas:", p1.coord_cartesianas())
+    print("Coordenadas Polares:", p1.coord_polares())
 
-p1 = Punto(1, 2)
-p2 = Punto(4, 6)
+    linea = Linea(p1, p2)
+    circulo = Circulo(p1, 5)
 
-linea = Linea(p1, p2)
-circulo = Circulo(p1, 5)
+    fig, ax = plt.subplots()
+    ax.set_xlim(-10, 10)
+    ax.set_ylim(-10, 10)
+    ax.set_aspect('equal')
 
-print(linea)
-linea.dibujaLinea()
+    linea.dibuja(ax)
+    circulo.dibuja(ax)
+    ax.scatter([p1.x, p2.x], [p1.y, p2.y], color='black')
 
-print(circulo)
-circulo.dibujaCirculo()
+    plt.show()

@@ -1,25 +1,30 @@
 public class Areas {
 
-    public static double calcularArea(double radio) {
+    public static double calcularAreaCirculo(double radio) {
         return Math.PI * Math.pow(radio, 2);
     }
 
-    public static double calcularArea(double base, double altura) {
+    public static double calcularAreaRectangulo(double base, double altura) {
         return base * altura;
     }
 
-    public static double calcularArea(double base, double altura, boolean esTriangulo) {
+    public static double calcularAreaTriangulo(double base, double altura) {
         return (base * altura) / 2;
     }
 
-    public static double calcularArea(double baseMayor, double baseMenor, double altura, boolean esTrapecio) {
+    public static double calcularAreaTrapecio(double baseMayor, double baseMenor, double altura) {
         return ((baseMayor + baseMenor) * altura) / 2;
     }
 
-    public static double calcularArea(double lado, double apotema, boolean esPentagono) {
+    public static double calcularAreaPentagono(double lado, double apotema) {
         return (5 * lado * apotema) / 2;
     }
 
     public static void main(String[] args) {
+        System.out.println("Área del círculo: " + calcularAreaCirculo(5));
+        System.out.println("Área del rectángulo: " + calcularAreaRectangulo(4, 6));
+        System.out.println("Área del triángulo: " + calcularAreaTriangulo(3, 7));
+        System.out.println("Área del trapecio: " + calcularAreaTrapecio(5, 3, 4));
+        System.out.println("Área del pentágono: " + calcularAreaPentagono(6, 4));
     }
 }

@@ -1,0 +1,25 @@
+public class Areas {
+
+    public static double calcularArea(double radio) {
+        return Math.PI * Math.pow(radio, 2);
+    }
+
+    public static double calcularArea(double base, double altura) {
+        return base * altura;
+    }
+
+    public static double calcularArea(double base, double altura, boolean esTriangulo) {
+        return (base * altura) / 2;
+    }
+
+    public static double calcularArea(double baseMayor, double baseMenor, double altura, boolean esTrapecio) {
+        return ((baseMayor + baseMenor) * altura) / 2;
+    }
+
+    public static double calcularArea(double lado, double apotema, boolean esPentagono) {
+        return (5 * lado * apotema) / 2;
+    }
+
+    public static void main(String[] args) {
+    }
+}

@@ -1,0 +1,16 @@
+import math
+
+def calcular_area(radio):
+    return math.pi * radio ** 2
+
+def calcular_area(base, altura):
+    return base * altura
+
+def calcular_area(base, altura, es_triangulo):
+    return (base * altura) / 2
+
+def calcular_area(base_mayor, base_menor, altura, es_trapecio):
+    return ((base_mayor + base_menor) * altura) / 2
+
+def calcular_area(lado, apotema, es_pentagono):
+    return (5 * lado * apotema) / 2

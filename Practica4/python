@@ -3,14 +3,20 @@ import math
 def calcular_area(radio):
     return math.pi * radio ** 2
 
-def calcular_area(base, altura):
+def calcular_area_rectangulo(base, altura):
     return base * altura
 
-def calcular_area(base, altura, es_triangulo):
+def calcular_area_triangulo(base, altura):
     return (base * altura) / 2
 
-def calcular_area(base_mayor, base_menor, altura, es_trapecio):
+def calcular_area_trapecio(base_mayor, base_menor, altura):
     return ((base_mayor + base_menor) * altura) / 2
 
-def calcular_area(lado, apotema, es_pentagono):
+def calcular_area_pentagono(lado, apotema):
     return (5 * lado * apotema) / 2
+
+print("Área del círculo:", calcular_area(5))
+print("Área del rectángulo:", calcular_area_rectangulo(4, 6))
+print("Área del triángulo:", calcular_area_triangulo(3, 7))
+print("Área del trapecio:", calcular_area_trapecio(5, 3, 4))
+print("Área del pentágono:", calcular_area_pentagono(6, 4))

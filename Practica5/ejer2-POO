@@ -1,0 +1,22 @@
+# Ejercicio 2 - (POO)
+class ListaNumeros:
+    def __init__(self):
+        self.lista = []
+
+    def agregar_numero(self, numero):
+        self.lista.append(numero)
+
+    def calcular_suma(self):
+        return sum(self.lista)
+def main():
+    lista = ListaNumeros()
+    cantidad = int(input("Ingrese la cantidad de elementos en la lista: "))
+    
+    for i in range(cantidad):
+        numero = float(input(f"Ingrese el número {i+1}: "))
+        lista.agregar_numero(numero)
+
+    print(f"La suma de los elementos de la lista es: {lista.calcular_suma()}")
+
+if __name__ == "__main__":
+    main()

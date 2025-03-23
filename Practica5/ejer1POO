@@ -1,0 +1,63 @@
+# Ejercicio 1 - (POO)
+
+class FiguraGeometrica:
+    def __init__(self, nombre):
+        self.nombre = nombre
+    
+    def calcular_area(self):
+        pass
+
+class Circulo(FiguraGeometrica):
+    def __init__(self, radio):
+        super().__init__("Círculo")
+        self.radio = radio
+
+    def calcular_area(self):
+        return 3.1416 * self.radio ** 2
+
+class Rectangulo(FiguraGeometrica):
+    def __init__(self, base, altura):
+        super().__init__("Rectángulo")
+        self.base = base
+        self.altura = altura
+
+    def calcular_area(self):
+        return self.base * self.altura
+
+class Triangulo(FiguraGeometrica):
+    def __init__(self, base, altura):
+        super().__init__("Triángulo")
+        self.base = base
+        self.altura = altura
+
+    def calcular_area(self):
+        return (self.base * self.altura) / 2
+
+def main():
+    print("Seleccione la figura para calcular el área:")
+    print("1. Círculo")
+    print("2. Rectángulo")
+    print("3. Triángulo")
+
+    seleccion = int(input("Opción: "))
+
+    if seleccion == 1:
+        radio = float(input("Ingrese el radio del círculo: "))
+        figura = Circulo(radio)
+    elif seleccion == 2:
+        base = float(input("Ingrese la base del rectángulo: "))
+        altura = float(input("Ingrese la altura del rectángulo: "))
+        figura = Rectangulo(base, altura)
+    elif seleccion == 3:
+        base = float(input("Ingrese la base del triángulo: "))
+        altura = float(input("Ingrese la altura del triángulo: "))
+        figura = Triangulo(base, altura)
+    else:
+        print("Opción no válida.")
+        return
+
+    print(f"El área del {figura.nombre} es: {figura.calcular_area()}")
+
+
+if __name__ == "__main__":
+    main()

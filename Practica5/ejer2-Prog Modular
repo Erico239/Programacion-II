@@ -1,0 +1,16 @@
+# Ejercicio 2 - Programación Modular
+
+def suma_lista(lista):
+    return sum(lista)
+def main():
+    lista = []
+    cantidad = int(input("Ingrese la cantidad de elementos en la lista: "))
+    
+    for i in range(cantidad):
+        numero = float(input(f"Ingrese el número {i+1}: "))
+        lista.append(numero)
+
+    print(f"La suma de los elementos de la lista es: {suma_lista(lista)}")
+
+if __name__ == "__main__":
+    main()

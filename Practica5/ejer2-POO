@@ -1,22 +1,31 @@
-# Ejercicio 2 - (POO)
-class ListaNumeros:
-    def __init__(self):
-        self.lista = []
+import math
 
-    def agregar_numero(self, numero):
-        self.lista.append(numero)
+class Estadisticas:
+    def __init__(self, numeros):
+        self.numeros = numeros
 
-    def calcular_suma(self):
-        return sum(self.lista)
+    def promedio(self):
+        return sum(self.numeros) / len(self.numeros)
+
+    def desviacion(self):
+        avg = self.promedio()
+        suma_cuadrados = sum((x - avg) ** 2 for x in self.numeros)
+        return math.sqrt(suma_cuadrados / (len(self.numeros) - 1))
+
 def main():
-    lista = ListaNumeros()
-    cantidad = int(input("Ingrese la cantidad de elementos en la lista: "))
-    
-    for i in range(cantidad):
-        numero = float(input(f"Ingrese el número {i+1}: "))
-        lista.agregar_numero(numero)
+    entrada = input("Ingrese 10 números separados por espacios: ").split()
+    numeros = [float(num) for num in entrada]
 
-    print(f"La suma de los elementos de la lista es: {lista.calcular_suma()}")
+    if len(numeros) != 10:
+        print("Debe ingresar exactamente 10 números.")
+        return
+
+    stats = Estadisticas(numeros)
+    avg = stats.promedio()
+    std_dev = stats.desviacion()
+
+    print(f"El promedio es {avg:.2f}")
+    print(f"La desviación estándar es {std_dev:.5f}")
 
 if __name__ == "__main__":
     main()

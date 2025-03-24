@@ -1,63 +1,40 @@
-# Ejercicio 1 - (POO)
+import math
 
-class FiguraGeometrica:
-    def __init__(self, nombre):
-        self.nombre = nombre
-    
-    def calcular_area(self):
-        pass
+class EcuacionCuadratica:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
 
-class Circulo(FiguraGeometrica):
-    def __init__(self, radio):
-        super().__init__("Círculo")
-        self.radio = radio
+    def get_discriminante(self):
+        return self.b ** 2 - 4 * self.a * self.c
 
-    def calcular_area(self):
-        return 3.1416 * self.radio ** 2
+    def get_raiz1(self):
+        discriminante = self.get_discriminante()
+        return (-self.b + math.sqrt(discriminante)) / (2 * self.a)
 
-class Rectangulo(FiguraGeometrica):
-    def __init__(self, base, altura):
-        super().__init__("Rectángulo")
-        self.base = base
-        self.altura = altura
-
-    def calcular_area(self):
-        return self.base * self.altura
-
-class Triangulo(FiguraGeometrica):
-    def __init__(self, base, altura):
-        super().__init__("Triángulo")
-        self.base = base
-        self.altura = altura
-
-    def calcular_area(self):
-        return (self.base * self.altura) / 2
+    def get_raiz2(self):
+        discriminante = self.get_discriminante()
+        return (-self.b - math.sqrt(discriminante)) / (2 * self.a)
 
 def main():
-    print("Seleccione la figura para calcular el área:")
-    print("1. Círculo")
-    print("2. Rectángulo")
-    print("3. Triángulo")
+    entrada = input("Ingrese a, b, c: ").split()
+    a = float(entrada[0])
+    b = float(entrada[1])
+    c = float(entrada[2])
 
-    seleccion = int(input("Opción: "))
+    ecuacion = EcuacionCuadratica(a, b, c)
+    discriminante = ecuacion.get_discriminante()
 
-    if seleccion == 1:
-        radio = float(input("Ingrese el radio del círculo: "))
-        figura = Circulo(radio)
-    elif seleccion == 2:
-        base = float(input("Ingrese la base del rectángulo: "))
-        altura = float(input("Ingrese la altura del rectángulo: "))
-        figura = Rectangulo(base, altura)
-    elif seleccion == 3:
-        base = float(input("Ingrese la base del triángulo: "))
-        altura = float(input("Ingrese la altura del triángulo: "))
-        figura = Triangulo(base, altura)
+    if discriminante > 0:
+        r1 = ecuacion.get_raiz1()
+        r2 = ecuacion.get_raiz2()
+        print(f"La ecuacion tiene dos raíces {r1:.5f} y {r2:.5f}")
+    elif discriminante == 0:
+        r = ecuacion.get_raiz1()  # También podría ser get_raiz2()
+        print(f"La ecuacion tiene una raíz {r:.0f}")
     else:
-        print("Opción no válida.")
-        return
-
-    print(f"El área del {figura.nombre} es: {figura.calcular_area()}")
-
+        print("La ecuacion no tiene raíces reales")
 
 if __name__ == "__main__":
     main()

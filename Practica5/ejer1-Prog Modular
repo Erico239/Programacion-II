@@ -1,31 +1,31 @@
-# Ejercicio 1 - Programación Modular
-def area_circulo(radio):
-    return 3.1416 * radio**2
-def area_rectangulo(base, altura):
-    return base * altura
-def area_triangulo(base, altura):
-    return (base * altura) / 2
+import math
+
+def get_discriminante(a, b, c):
+    return b ** 2 - 4 * a * c
+
+def get_raiz1(a, b, discriminante):
+    return (-b + math.sqrt(discriminante)) / (2 * a)
+
+def get_raiz2(a, b, discriminante):
+    return (-b - math.sqrt(discriminante)) / (2 * a)
+
 def main():
-    print("Seleccione la figura para calcular el área:")
-    print("1. Círculo")
-    print("2. Rectángulo")
-    print("3. Triángulo")
+    entrada = input("Ingrese a, b, c: ").split()
+    a = float(entrada[0])
+    b = float(entrada[1])
+    c = float(entrada[2])
 
-    seleccion = int(input("Opción: "))
+    discriminante = get_discriminante(a, b, c)
 
-    if seleccion == 1:
-        radio = float(input("Ingrese el radio del círculo: "))
-        print(f"El área del círculo es: {area_circulo(radio)}")
-    elif seleccion == 2:
-        base = float(input("Ingrese la base del rectángulo: "))
-        altura = float(input("Ingrese la altura del rectángulo: "))
-        print(f"El área del rectángulo es: {area_rectangulo(base, altura)}")
-    elif seleccion == 3:
-        base = float(input("Ingrese la base del triángulo: "))
-        altura = float(input("Ingrese la altura del triángulo: "))
-        print(f"El área del triángulo es: {area_triangulo(base, altura)}")
+    if discriminante > 0:
+        r1 = get_raiz1(a, b, discriminante)
+        r2 = get_raiz2(a, b, discriminante)
+        print(f"La ecuacion tiene dos raíces {r1:.5f} y {r2:.5f}")
+    elif discriminante == 0:
+        r = -b / (2 * a)
+        print(f"La ecuación tien una raíz {r:.0f}")
     else:
-        print("Opción no válida.")
+        print("La ecuacion no tiene raíces reales")
 
 if __name__ == "__main__":
     main()

@@ -1,16 +1,26 @@
-# Ejercicio 2 - Programación Modular
+import math
 
-def suma_lista(lista):
-    return sum(lista)
+def promedio(numeros):
+    return sum(numeros) / len(numeros)
+
+def desviacion(numeros):
+    avg = promedio(numeros)
+    suma_cuadrados = sum((x - avg) ** 2 for x in numeros)
+    return math.sqrt(suma_cuadrados / (len(numeros) - 1))
+
 def main():
-    lista = []
-    cantidad = int(input("Ingrese la cantidad de elementos en la lista: "))
-    
-    for i in range(cantidad):
-        numero = float(input(f"Ingrese el número {i+1}: "))
-        lista.append(numero)
+    entrada = input("Ingrese 10 números separados por espacios: ").split()
+    numeros = [float(num) for num in entrada]
 
-    print(f"La suma de los elementos de la lista es: {suma_lista(lista)}")
+    if len(numeros) != 10:
+        print("Debe ingresar exactamente 10 números.")
+        return
+
+    avg = promedio(numeros)
+    std_dev = desviacion(numeros)
+
+    print(f"El promedio es {avg:.2f}")
+    print(f"La desviación estándar es {std_dev:.5f}")
 
 if __name__ == "__main__":
     main()

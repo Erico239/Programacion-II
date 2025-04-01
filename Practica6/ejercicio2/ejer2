@@ -1,0 +1,59 @@
+import math
+
+class Vector3D:
+    def init(self, x, y, z=0):
+        self.x = x
+        self.y = y
+        self.z = z
+    def magnitude(self):
+        return math.sqrt(self.x*2 + self.y2 + self.z*2)
+    def normalize(self):
+        mag = self.magnitude()
+        if mag == 0:
+            raise ValueError("No se puede normalizar un vector nulo.")
+        return Vector3D(self.x / mag, self.y / mag, self.z / mag)
+    def dot(self, other):
+        return self.x * other.x + self.y * other.y + self.z * other.z
+    def cross(self, other):
+        x = self.y * other.z - self.z * other.y
+        y = self.z * other.x - self.x * other.z
+        z = self.x * other.y - self.y * other.x
+        return Vector3D(x, y, z)
+    def project(self, other):
+        scalar_projection = self.dot(other) / other.magnitude()**2
+        return Vector3D(scalar_projection * other.x, scalar_projection * other.y, scalar_projection * other.z)
+    def add(self, other):
+        return Vector3D(self.x + other.x, self.y + other.y, self.z + other.z)
+    def mul(self, scalar):
+        return Vector3D(self.x * scalar, self.y * scalar, self.z * scalar)
+    def rmul(self, scalar):
+        return self.mul(scalar)
+    def str(self):
+        if self.z == 0:
+            return f"({self.x},{self.y})"
+        else:
+            return f"({self.x},{self.y},{self.z})"
+def input_vector(prompt):
+    while True:
+        try:
+            values = input(prompt).strip().split(',')
+            if len(values) == 2:
+                x, y = map(float, values)
+                z = 0
+            elif len(values) == 3:
+                x, y, z = map(float, values)
+            else:
+                print("Por favor, ingrese 2 o 3 valores separados por comas.")
+                continue
+            return Vector3D(x, y, z)
+        except ValueError:
+            print("Por favor, ingrese números válidos.")
+if name == "main":
+    print("Ingrese los vectores como x,y o x,y,z")
+    a = input_vector("a: ")
+    b = input_vector("b: ")
+    print(f"a{a}")
+    print(f"b{b}")
+    print(f"Producto escalar = {a.dot(b)}")
+    print(f"Producto cruzado = {a.cross(b)}")
+    print(f"Proyección de a sobre b: {a.project(b)}")

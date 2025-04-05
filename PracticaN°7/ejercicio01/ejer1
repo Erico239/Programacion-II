@@ -1,0 +1,57 @@
+import random
+
+class Juego:
+    def __init__(self, numeroDeVidas):
+        self.vidas_iniciales = numeroDeVidas  
+        self.numeroDeVidas = numeroDeVidas    
+        self.record = 0                       
+
+    def reiniciaPartida(self):
+        self.numeroDeVidas = self.vidas_iniciales
+
+    def actualizaRecord(self):
+        if self.numeroDeVidas > self.record:
+            self.record = self.numeroDeVidas
+
+    def quitaVida(self):
+        self.numeroDeVidas -= 1
+        return self.numeroDeVidas > 0
+
+class JuegoAdivinaNumero(Juego):
+    def __init__(self, numeroDeVidas):
+        super().__init__(numeroDeVidas)
+        self.numeroAAdivinar = 0
+
+    def juega(self):
+        self.reiniciaPartida()
+        self.numeroAAdivinar = random.randint(0, 10)
+        print("Adivina un número entre 0 y 10.")
+        
+        while True:
+            try:
+                guess = int(input("Introduce tu número: "))
+            except ValueError:
+                print("Por favor, introduce un número válido.")
+                continue
+                
+            if guess == self.numeroAAdivinar:
+                print("¡Acertaste!")
+                self.actualizaRecord()
+                print(f"Récord actual: {self.record}")
+                break
+            else:
+                if not self.quitaVida():
+                    print(f"¡Game Over! El número era: {self.numeroAAdivinar}")
+                    break
+                else:
+                    hint = "mayor" if self.numeroAAdivinar > guess else "menor"
+                    print(f"El número es {hint}. Vidas restantes: {self.numeroDeVidas}")
+
+class Aplicacion:
+    @staticmethod
+    def main():
+        juego = JuegoAdivinaNumero(3) 
+        juego.juega()
+
+if __name__ == "__main__":
+    Aplicacion.main()

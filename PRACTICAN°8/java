@@ -1,0 +1,76 @@
+public class Main {
+    public static void main(String[] args) {
+        A a = new A();
+        B b = new B();
+        D d = new D();
+
+        a.b.add(b);
+        b.d.add(d);
+
+        a.incrementaX();
+        b.incrementaY();
+        d.incrementaX();
+
+        System.out.println("A's x: " + a.x); // Should print 1
+        System.out.println("B's y: " + b.y); // Should print 1
+        System.out.println("D's x: " + d.x); // Should print 1
+    }
+}
+
+class A {
+    int x;
+    int z;
+    java.util.ArrayList<B> b;
+
+    public A() {
+        this.x = 0;
+        this.z = 0;
+        this.b = new java.util.ArrayList<>();
+    }
+
+    public void incrementaX() {
+        this.x++;
+    }
+
+    public void incrementaZ() {
+        this.z++;
+    }
+}
+
+class B {
+    int y;
+    int z;
+    java.util.ArrayList<D> d;
+
+    public B() {
+        this.y = 0;
+        this.z = 0;
+        this.d = new java.util.ArrayList<>();
+    }
+
+    public void incrementaY() {
+        this.y++;
+    }
+
+    public void incrementaZ() {
+        this.z++;
+    }
+}
+
+class D {
+    int x;
+    int y;
+
+    public D() {
+        this.x = 0;
+        this.y = 0;
+    }
+
+    public void incrementaX() {
+        this.x++;
+    }
+
+    public void incrementaY() {
+        this.y++;
+    }
+}

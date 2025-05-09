@@ -1,0 +1,76 @@
+public class TeatroMunicipal {
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        Boleto palco = new Palco(13);
+        Boleto platea1 = new Platea(14, 12); 
+        Boleto platea2 = new Platea(15, 5);  
+        Boleto galeria1 = new Galeria(16, 10); 
+        Boleto galeria2 = new Galeria(17, 8);  
+
+        System.out.println(palco.toString());
+        System.out.println(platea1.toString());
+        System.out.println(platea2.toString());
+        System.out.println(galeria1.toString());
+        System.out.println(galeria2.toString());
+    }
+}
+
+abstract class Boleto {
+    protected int numero;
+    protected double precio;
+
+    public Boleto(int numero) {
+        this.numero = numero;
+    }
+
+    public abstract double getPrecio();
+
+    @Override
+    public String toString() {
+        return "Número: " + numero + ", Precio: " + getPrecio();
+    }
+}
+
+class Palco extends Boleto {
+    private static final double PRECIO_PALCO = 100.00;
+
+    public Palco(int numero) {
+        super(numero);
+        this.precio = PRECIO_PALCO;
+    }
+
+    @Override
+    public double getPrecio() {
+        return precio;
+    }
+}
+
+class Platea extends Boleto {
+    private int diasAnticipacion;
+
+    public Platea(int numero, int diasAnticipacion) {
+        super(numero);
+        this.diasAnticipacion = diasAnticipacion;
+        this.precio = (diasAnticipacion >= 10) ? 50.00 : 60.00;
+    }
+
+    @Override
+    public double getPrecio() {
+        return precio;
+    }
+}
+
+class Galeria extends Boleto {
+    private int diasAnticipacion;
+
+    public Galeria(int numero, int diasAnticipacion) {
+        super(numero);
+        this.diasAnticipacion = diasAnticipacion;
+        this.precio = (diasAnticipacion >= 10) ? 25.00 : 30.00;
+    }
+
+    @Override
+    public double getPrecio() {
+        return precio;
+    }
+}

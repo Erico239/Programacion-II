@@ -1,0 +1,94 @@
+class Ministerio:
+    def __init__(self, nombre, direccion, nroEmpleados, empleados, edades, sueldos):
+        self.nombre = nombre
+        self.direccion = direccion
+        self.nroEmpleados = nroEmpleados
+        self.empleados = empleados  # Lista de nombres de empleados
+        self.edades = edades        # Lista de edades
+        self.sueldos = sueldos      # Lista de sueldos
+
+    # a) Instanciar 2 objetos Ministerio de diferente forma
+    @classmethod
+    def crear_ministerio_1(cls):
+        return cls("Rojo", "Estacion Central, Estacion Cementerio, Estacion 16 de Julio", 4, 
+                   ["Pedro", "Lucy", "Ana", "Saul"], [35, 43, 26, 29], [2500, 3250, 2700, 2500])
+
+    @classmethod
+    def crear_ministerio_2(cls):
+        nombre = "Verde"
+        direccion = "Estacion Central, Estacion 18 de Noviembre"
+        nroEmpleados = 3
+        empleados = ["Maria", "Jose", "Luis"]
+        edades = [30, 40, 25]
+        sueldos = [2000, 2800, 2400]
+        return cls(nombre, direccion, nroEmpleados, empleados, edades, sueldos)
+
+    # b) Eliminar empleados con edad X (por ejemplo, edad mayor a 40)
+    def eliminar_por_edad(self, edad_limite):
+        indices = [i for i in range(len(self.edades)) if self.edades[i] > edad_limite]
+        for i in sorted(indices, reverse=True):
+            self.empleados.pop(i)
+            self.edades.pop(i)
+            self.sueldos.pop(i)
+
+    # c) Sobrecargar un operador para transferir empleado del primer objeto al segundo
+    def transferir_empleado(self, otro_objeto, indice_empleado):
+        if 0 <= indice_empleado < len(self.empleados):
+            otro_objeto.empleados.append(self.empleados[indice_empleado])
+            otro_objeto.edades.append(self.edades[indice_empleado])
+            otro_objeto.sueldos.append(self.sueldos[indice_empleado])
+            self.empleados.pop(indice_empleado)
+            self.edades.pop(indice_empleado)
+            self.sueldos.pop(indice_empleado)
+
+    # d) Sobrecargar un método para mostrar empleados con la menor edad
+    def mostrar_menor_edad(self):
+        if not self.edades:
+            return "No hay empleados"
+        min_edad = min(self.edades)
+        empleados_menor_edad = [self.empleados[i] for i in range(len(self.edades)) if self.edades[i] == min_edad]
+        return empleados_menor_edad
+
+    # d) Sobrecargar un método para mostrar empleados con el mayor sueldo
+    def mostrar_mayor_sueldo(self):
+        if not self.sueldos:
+            return "No hay empleados"
+        max_sueldo = max(self.sueldos)
+        empleados_mayor_sueldo = [self.empleados[i] for i in range(len(self.sueldos)) if self.sueldos[i] == max_sueldo]
+        return empleados_mayor_sueldo
+
+    def __str__(self):
+        return (f"Ministerio(nombre={self.nombre}, direccion={self.direccion}, nroEmpleados={self.nroEmpleados}, "
+                f"empleados={self.empleados}, edades={self.edades}, sueldos={self.sueldos})")
+
+
+# Resolución de los incisos
+def main():
+    # a) Instanciar 2 objetos
+    ministerio1 = Ministerio.crear_ministerio_1()
+    ministerio2 = Ministerio.crear_ministerio_2()
+    print("Ministerio 1:", ministerio1)
+    print("Ministerio 2:", ministerio2)
+
+    # b) Eliminar empleados con edad mayor a 40
+    print("\nEliminando empleados con edad mayor a 40 en Ministerio 1:")
+    ministerio1.eliminar_por_edad(40)
+    print("Ministerio 1 después de eliminar:", ministerio1)
+
+    # c) Transferir un empleado de ministerio1 a ministerio2 (por ejemplo, el empleado en índice 0)
+    print("\nTransfiriendo empleado de Ministerio 1 a Ministerio 2:")
+    ministerio1.transferir_empleado(ministerio2, 0)
+    print("Ministerio 1 después de transferencia:", ministerio1)
+    print("Ministerio 2 después de transferencia:", ministerio2)
+
+    # d) Mostrar empleados con menor edad
+    print("\nEmpleados con menor edad en Ministerio 1:", ministerio1.mostrar_menor_edad())
+    print("Empleados con menor edad en Ministerio 2:", ministerio2.mostrar_menor_edad())
+
+    # d) Mostrar empleados con mayor sueldo
+    print("\nEmpleados con mayor sueldo en Ministerio 1:", ministerio1.mostrar_mayor_sueldo())
+    print("Empleados con mayor sueldo en Ministerio 2:", ministerio2.mostrar_mayor_sueldo())
+
+
+if __name__ == "__main__":
+    main()

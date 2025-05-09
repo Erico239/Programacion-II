@@ -1,0 +1,84 @@
+from abc import ABC, abstractmethod
+import random
+import math
+
+class Coloreado(ABC):
+    @abstractmethod
+    def como_colorear(self) -> str:
+        pass
+
+class Figura(ABC):
+    def __init__(self, color: str = "Sin color"):
+        self._color = color
+    
+    def set_color(self, color: str) -> None:
+        self._color = color
+    
+    def get_color(self) -> str:
+        return self._color
+    
+    def __str__(self) -> str:
+        return f"Color: {self._color}"
+    
+    @abstractmethod
+    def area(self) -> float:
+        pass
+    
+    @abstractmethod
+    def perimetro(self) -> float:
+        pass
+
+# c) Clase Cuadrado
+class Cuadrado(Figura, Coloreado):
+    def __init__(self, lado: float, color: str = "Rojo"):
+        super().__init__(color)
+        self.lado = lado
+    
+    def area(self) -> float:
+        return self.lado ** 2
+    
+    def perimetro(self) -> float:
+        return 4 * self.lado
+    
+    def como_colorear(self) -> str:
+        return "Colorear los cuatro lados"
+    
+    def __str__(self) -> str:
+        return f"Cuadrado - {super().__str__()}, Lado: {self.lado:.2f}"
+
+# d) Clase Circulo
+class Circulo(Figura):
+    def __init__(self, radio: float, color: str = "Azul"):
+        super().__init__(color)
+        self.radio = radio
+    
+    def area(self) -> float:
+        return math.pi * self.radio ** 2
+    
+    def perimetro(self) -> float:
+        return 2 * math.pi * self.radio
+    
+    def __str__(self) -> str:
+        return f"Círculo - {super().__str__()}, Radio: {self.radio:.2f}"
+
+# f) y g) Programa de prueba
+if __name__ == "__main__":
+    figuras = []
+    for _ in range(5):
+        tipo = random.randint(1, 2)
+        if tipo == 1:
+            lado = random.uniform(1, 10)
+            figuras.append(Cuadrado(lado))
+        else:
+            radio = random.uniform(1, 10)
+            figuras.append(Circulo(radio))
+    
+    for figura in figuras:
+        print(figura)
+        print(f"Área: {figura.area():.2f}")
+        print(f"Perímetro: {figura.perimetro():.2f}")
+        
+        if isinstance(figura, Coloreado):
+            print(f"Método colorear: {figura.como_colorear()}")
+        
+        print("-" * 20)

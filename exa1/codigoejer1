@@ -1,0 +1,94 @@
+class LineaTelefonica:
+    def __init__(self, color, tramo, nroCabinas, empleados, edades, sueldos):
+        self.color = color
+        self.tramo = tramo
+        self.nroCabinas = nroCabinas
+        self.empleados = empleados  
+        self.edades = edades        
+        self.sueldos = sueldos      
+
+    # a) Instanciar 2 objetos LineaTelefonica de diferente forma
+    @classmethod
+    def crear_linea_1(cls):
+        return cls("Rojo", "Estacion Central, Estacion Cementerio, Estacion 16 de Julio", 20, 
+                   ["Pedro", "Lucy", "Ana", "Saul"], [35, 43, 26, 29], [2500, 3250, 2700, 2500])
+
+    @classmethod
+    def crear_linea_2(cls):
+        color = "Verde"
+        tramo = "Estacion Central, Estacion 18 de Noviembre"
+        nroCabinas = 15
+        empleados = ["Maria", "Jose", "Luis"]
+        edades = [30, 40, 25]
+        sueldos = [2000, 2800, 2400]
+        return cls(color, tramo, nroCabinas, empleados, edades, sueldos)
+
+    # b) Eliminar empleados con apellido X, paterno o materno (por ejemplo, "Rojas")
+    def eliminar_por_apellido(self, apellido):
+        indices = [i for i, emp in enumerate(self.empleados) if apellido in emp.split()]
+        for i in sorted(indices, reverse=True):
+            self.empleados.pop(i)
+            self.edades.pop(i)
+            self.sueldos.pop(i)
+
+    # c) Sobrecargar operador para transferir empleado de primer objeto al segundo
+    def transferir_empleado(self, otro_objeto, indice_empleado):
+        if 0 <= indice_empleado < len(self.empleados):
+            otro_objeto.empleados.append(self.empleados[indice_empleado])
+            otro_objeto.edades.append(self.edades[indice_empleado])
+            otro_objeto.sueldos.append(self.sueldos[indice_empleado])
+            self.empleados.pop(indice_empleado)
+            self.edades.pop(indice_empleado)
+            self.sueldos.pop(indice_empleado)
+
+    # d) Sobrecargar un método para mostrar empleados con la mayor edad
+    def mostrar_mayor_edad(self):
+        if not self.edades:
+            return "No hay empleados"
+        max_edad = max(self.edades)
+        empleados_mayor_edad = [self.empleados[i] for i in range(len(self.edades)) if self.edades[i] == max_edad]
+        return empleados_mayor_edad
+
+    # e) Sobrecargar un método para mostrar empleados con el mayor sueldo
+    def mostrar_mayor_sueldo(self):
+        if not self.sueldos:
+            return "No hay empleados"
+        max_sueldo = max(self.sueldos)
+        empleados_mayor_sueldo = [self.empleados[i] for i in range(len(self.sueldos)) if self.sueldos[i] == max_sueldo]
+        return empleados_mayor_sueldo
+
+    def __str__(self):
+        return (f"LineaTelefonica(color={self.color}, tramo={self.tramo}, nroCabinas={self.nroCabinas}, "
+                f"empleados={self.empleados}, edades={self.edades}, sueldos={self.sueldos})")
+
+
+# Resolución de los incisos
+def main():
+    # a) Instanciar 2 objetos
+    linea1 = LineaTelefonica.crear_linea_1()
+    linea2 = LineaTelefonica.crear_linea_2()
+    print("Linea 1:", linea1)
+    print("Linea 2:", linea2)
+
+    # b) Eliminar empleados con apellido "Rojas"
+    print("\nEliminando empleados con apellido 'Rojas' en Linea 1:")
+    linea1.eliminar_por_apellido("Rojas")
+    print("Linea 1 después de eliminar:", linea1)
+
+    # c) Transferir un empleado de linea1 a linea2 (por ejemplo, el empleado en índice 0)
+    print("\nTransfiriendo empleado de Linea 1 a Linea 2:")
+    linea1.transferir_empleado(linea2, 0)
+    print("Linea 1 después de transferencia:", linea1)
+    print("Linea 2 después de transferencia:", linea2)
+
+    # d) Mostrar empleados con mayor edad
+    print("\nEmpleados con mayor edad en Linea 1:", linea1.mostrar_mayor_edad())
+    print("Empleados con mayor edad en Linea 2:", linea2.mostrar_mayor_edad())
+
+    # e) Mostrar empleados con mayor sueldo
+    print("\nEmpleados con mayor sueldo en Linea 1:", linea1.mostrar_mayor_sueldo())
+    print("Empleados con mayor sueldo en Linea 2:", linea2.mostrar_mayor_sueldo())
+
+
+if __name__ == "__main__":
+    main()

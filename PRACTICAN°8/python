@@ -1,0 +1,54 @@
+class A:
+    def __init__(self):
+        self.x = 0
+        self.z = 0
+        self.b = []  
+
+    def incrementaX(self):
+        self.x += 1
+
+    def incrementaZ(self):
+        self.z += 1
+
+
+class B:
+    def __init__(self):
+        self.y = 0
+        self.z = 0
+        self.d = []  
+
+    def incrementaY(self):
+        self.y += 1
+
+    def incrementaZ(self):
+        self.z += 1
+
+
+class D:
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+
+    def incrementaX(self):
+        self.x += 1
+
+    def incrementaY(self):
+        self.y += 1
+
+
+
+if __name__ == "__main__":
+    a = A()
+    b = B()
+    d = D()
+    
+    a.b.append(b) 
+    b.d.append(d)  
+    
+    a.incrementaX()
+    b.incrementaY()
+    d.incrementaX()
+    
+    print(f"A's x: {a.x}")  # Should print 1
+    print(f"B's y: {b.y}")  # Should print 1
+    print(f"D's x: {d.x}")  # Should print 1

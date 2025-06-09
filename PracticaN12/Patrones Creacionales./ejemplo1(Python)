@@ -1,0 +1,53 @@
+from abc import ABC, abstractmethod
+
+class Transporte(ABC):
+    @abstractmethod
+    def entregar(self) -> str:
+        pass
+
+class Camion(Transporte):
+    def entregar(self) -> str:
+        return "Entrega por tierra en un camión."
+
+class Barco(Transporte):
+    def entregar(self) -> str:
+        return "Entrega por mar en un barco."
+
+# --- Creador y Creadores Concretos ---
+class Logistica(ABC):
+    @abstractmethod
+    def crear_transporte(self) -> Transporte:
+        pass
+
+    def planificar_entrega(self) -> str:
+        transporte = self.crear_transporte()
+        return f"Logística: {transporte.entregar()}"
+
+class LogisticaTerrestre(Logistica):
+    def crear_transporte(self) -> Transporte:
+        return Camion()
+
+class LogisticaMaritima(Logistica):
+    def crear_transporte(self) -> Transporte:
+        return Barco()
+
+def main():
+    """Función principal que interactúa con el usuario."""
+    while True:
+        tipo_logistica = input("¿Qué tipo de logística desea? (terrestre / maritima / salir): ").lower()
+
+        if tipo_logistica == "terrestre":
+            logistica = LogisticaTerrestre()
+            print(logistica.planificar_entrega())
+        elif tipo_logistica == "maritima":
+            logistica = LogisticaMaritima()
+            print(logistica.planificar_entrega())
+        elif tipo_logistica == "salir":
+            print("Saliendo del programa.")
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
+        print("-" * 20)
+
+if __name__ == "__main__":
+    main()

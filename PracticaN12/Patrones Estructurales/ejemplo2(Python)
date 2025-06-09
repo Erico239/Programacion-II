@@ -1,0 +1,54 @@
+
+class ProcesadorPago:
+    def procesar_pago(self, monto: float):
+        raise NotImplementedError
+
+# --- Clase Incompatible (Adaptee) ---
+class ApiExternaPayPal:
+    def enviar_pago_a_cuenta(self, email: str, cantidad: float):
+        print(f"PayPal: Enviando ${cantidad:.2f} a la cuenta {email}.")
+
+# --- El Adaptador (Adapter) ---
+class AdaptadorPayPal(ProcesadorPago):
+    def __init__(self, paypal_api: ApiExternaPayPal, email_destino: str):
+        self._paypal_api = paypal_api
+        self._email_destino = email_destino
+
+    def procesar_pago(self, monto: float):
+        print("Adaptador: Convirtiendo la llamada 'procesar_pago' a 'enviar_pago_a_cuenta'...")
+        self._paypal_api.enviar_pago_a_cuenta(self._email_destino, monto)
+
+# --- Código Cliente Interactivo ---
+def main():
+    """Función principal que interactúa con el usuario."""
+    # Instanciamos la API externa que queremos adaptar
+    paypal_api = ApiExternaPayPal()
+
+    email_tienda = input("Ingrese el email de la tienda para configurar el adaptador: ")
+    # Creamos el adaptador, envolviendo la API y proveyendo los datos necesarios
+    adaptador = AdaptadorPayPal(paypal_api, email_tienda)
+
+    while True:
+        try:
+            monto_str = input("Ingrese el monto a pagar (o 'salir' para terminar): ")
+            if monto_str.lower() == 'salir':
+                print("Saliendo del programa de pagos.")
+                break
+            
+            monto = float(monto_str)
+            if monto <= 0:
+                print("El monto debe ser positivo.")
+                continue
+
+            # El código cliente usa el adaptador como si fuera un procesador de pago original.
+            print("\nCliente: Ejecutando un pago con el procesador adaptado.")
+            adaptador.procesar_pago(monto)
+            print("-" * 20)
+
+        except ValueError:
+            print("Error: Por favor, ingrese un número válido para el monto.")
+        except Exception as e:
+            print(f"Ocurrió un error: {e}")
+
+if __name__ == "__main__":
+    main()

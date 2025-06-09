@@ -1,0 +1,77 @@
+from __future__ import annotations
+from abc import ABC, abstractmethod
+from typing import List
+
+# --- Interfaces ---
+class Sujeto(ABC):
+    @abstractmethod
+    def agregar(self, observador: Observador) -> None: pass
+    @abstractmethod
+    def quitar(self, observador: Observador) -> None: pass
+    @abstractmethod
+    def notificar(self) -> None: pass
+
+class Observador(ABC):
+    @abstractmethod
+    def actualizar(self, sujeto: Sujeto) -> None: pass
+
+# --- Sujeto Concreto ---
+class EstacionMeteorologica(Sujeto):
+    _temperatura: float = 0.0
+    _observadores: List[Observador] = []
+
+    def agregar(self, observador: Observador) -> None:
+        print("Estación: Se ha suscrito un nuevo observador.")
+        self._observadores.append(observador)
+
+    def quitar(self, observador: Observador) -> None:
+        self._observadores.remove(observador)
+        print("Estación: Un observador se ha dado de baja.")
+
+    def notificar(self) -> None:
+        print("Estación: Notificando a todos los observadores...")
+        for observador in self._observadores:
+            observador.actualizar(self)
+
+    def set_temperatura(self, temp: float) -> None:
+        print(f"\nEstación: ¡La temperatura ha cambiado!")
+        self._temperatura = temp
+        self.notificar()
+
+# --- Observadores Concretos ---
+class DisplayMovil(Observador):
+    def actualizar(self, sujeto: EstacionMeteorologica) -> None:
+        temperatura = sujeto._temperatura
+        print(f"📱 Display Móvil: La nueva temperatura es {temperatura}°C.")
+
+class DashboardWeb(Observador):
+    def actualizar(self, sujeto: EstacionMeteorologica) -> None:
+        temperatura = sujeto._temperatura
+        print(f"💻 Dashboard Web: Refrescando datos. Temperatura actual: {temperatura}°C.")
+
+# --- Código Cliente Interactivo ---
+def main():
+    estacion = EstacionMeteorologica()
+    display_movil = DisplayMovil()
+    dashboard_web = DashboardWeb()
+
+    estacion.agregar(display_movil)
+    estacion.agregar(dashboard_web)
+
+    while True:
+        try:
+            temp_str = input("\nIngrese la nueva temperatura (o 'salir' para terminar): ")
+            if temp_str.lower() == 'salir':
+                print("Apagando la estación meteorológica.")
+                break
+
+            nueva_temperatura = float(temp_str)
+            estacion.set_temperatura(nueva_temperatura)
+
+        except ValueError:
+            print("Error: Ingrese un valor numérico para la temperatura.")
+        except Exception as e:
+            print(f"Ocurrió un error: {e}")
+
+if __name__ == "__main__":
+    main()
